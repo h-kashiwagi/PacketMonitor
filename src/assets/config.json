@@ -1,0 +1,12 @@
+[
+    {"id": "1" , "title": "日時(from)"    , "display_flag": 0, "handlimg_flag": 0  , "search_flag":1002, "data": [] },
+    {"id": "2" , "title": "日時(to)"      , "display_flag": 0, "handlimg_flag": 0  , "search_flag":1003, "data": [] },
+    {"id": "3" , "title": "送信元Mac"     , "display_flag": 1, "handlimg_flag": 100, "search_flag":1004, "data": [6,7,8,9,10,11]},
+    {"id": "4" , "title": "送信先Mac"     , "display_flag": 1, "handlimg_flag": 100, "search_flag":1005, "data": [0,1,2,3,4,5]},
+    {"id": "5" , "title": "送信元IP"      , "display_flag": 1, "handlimg_flag": 0  , "search_flag":1006, "data": [30,31,32,33]},
+    {"id": "6" , "title": "送信先IP"      , "display_flag": 1, "handlimg_flag": 0  , "search_flag":1007, "data": [26,27,28,29]},
+    {"id": "7" , "title": "Protcol"       , "display_flag": 1, "handlimg_flag": 0  , "search_flag":1008, "data": [23]},
+    {"id": "8" , "title": "Length"        , "display_flag": 1, "handlimg_flag": 101, "search_flag":1009, "data": [16,17]},
+    {"id": "9", "title": "パターン"       , "display_flag": 0, "handlimg_flag": 0  , "search_flag":1010, "data": [] },
+    {"id": "10", "title": "Color"         , "display_flag": 0, "handlimg_flag": 0  , "search_flag":1011, "data": [] }
+]

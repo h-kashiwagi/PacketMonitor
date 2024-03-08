@@ -1,0 +1,1891 @@
+<!-- HTML-->
+<template class="packet_operator">
+  <div class="packet_operator">
+    <!-- タイトル -->
+    <div class="packet_operator_title">
+      <h1>{{ title }}</h1>
+    </div>
+
+    <!-- 現在時刻 -->
+    <div class="packet_operator_time">
+      <h1>{{ nowTime }}</h1>
+    </div>
+
+    <!-- 検索入力欄 -->
+    <div class="packet_operator_search_input">
+      <div>
+        <h1 class="input_title_left" >{{  search_title[0] }}</h1>
+        <input type="text" class="input_text_left" v-model="text_area_data[0]">
+        <!-- <select class="input_select_left" v-model="selectedItem">
+          <option v-for="item in selectedItem.selectItems" :value="item.id" :key="item.id"> {{ item.label }} </option>
+        </select> -->
+        <h1 class="input_title_right">{{  search_title[1] }}</h1>
+        <input type="text" class="input_text_right" v-model="text_area_data[1]">
+      </div>
+      <div class="packet_operator_search_input_row_2">
+        <h1 class="input_title_left">{{  search_title[2] }}</h1>
+        <input type="text" class="input_text_left" v-model="text_area_data[2]">
+        <h1 class="input_title_right">{{  search_title[3] }}</h1>
+        <input type="text" class="input_text_right" v-model="text_area_data[3]">
+      </div>
+      <div class="packet_operator_search_input_row_3">
+        <h1 class="input_title_left">{{  search_title[4] }}</h1>
+        <input type="text" class="input_text_left" v-model="text_area_data[4]">
+        <h1 class="input_title_right">{{  search_title[5] }}</h1>
+        <input type="text" class="input_text_right" v-model="text_area_data[5]">
+      </div>
+      <div class="packet_operator_search_input_row_4">
+        <h1 class="input_title_left">{{  search_title[6] }}</h1>
+        <input type="text" class="input_text_left" v-model="text_area_data[6]">
+        <h1 class="input_title_right">{{  search_title[7] }}</h1>
+        <input type="text" class="input_text_right" v-model="text_area_data[7]">
+      </div>
+      <div class="packet_operator_search_input_row_5">
+        <h1 class="input_title_left">{{  search_title[8] }}</h1>
+        <input type="text" class="input_text_left" v-model="text_area_data[8]">
+        <h1 class="input_title_right">{{  search_title[9] }}</h1>
+         <!-- チェックボックス -->
+         <div id="color_box" class="input_selectbox_right">
+          <input type="checkbox" id="color0" class="color_item" name="colors" autocomplete="off" value="0"/><label for="color0">white</label>
+          <input type="checkbox" id="color1" class="color_item" name="colors" autocomplete="off" value="1"/><label for="color1">orange</label>
+          <input type="checkbox" id="color2" class="color_item" name="colors" autocomplete="off" value="2"/><label for="color2">green</label>
+          <input type="checkbox" id="color3" class="color_item" name="colors" autocomplete="off" value="3"/><label for="color3">black</label>
+         </div>
+      </div>
+      <div class="packet_operator_search_input_row_6">
+        <h1
+         class="input_title_left">{{  search_title[10] }}</h1>
+        <input type="text" class="input_text_left" v-model="text_area_data[10]">
+        <h1 class="input_title_right">{{  search_title[11] }}</h1>
+        <input type="text" class="input_text_right" v-model="text_area_data[11]">
+      </div>
+    </div>
+
+    <!-- 検索ボタン リセットボタン -->
+    <div class="packet_operator_search_botton">
+      <botton id="search_botton" class="botton_image_search botton_image_search" v-on:click="packet_operator_search_start_botton()">{{search_botton_msg}}</botton>
+      <h1 style="height:20px;"></h1>
+      <botton id="reset_botton"  class="botton_image_search botton_image_reset"  v-on:click="packet_operator_search_end_botton()">{{reset_botton_msg}}</botton>
+    </div>
+
+     <!-- 累計件数 -->
+    <div class="packet_operator_cumulative_total">
+      <div class="cumulative_total_msg">{{ cumulative_total_msg }}</div>
+      <div class="cumulative_total">{{ cumulative_total }}</div>
+    </div>
+
+    <!-- パケット情報表示 -->
+    <div class="packet_operator_information">
+      <!-- ヘッダー -->
+      <div class="packet_operator_information_header">
+        <!-- <div class="packet_operator_information_header_time">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[0] }">{{ information_header_time_title }}</h1>
+        </div>
+        <div class="packet_operator_information_header_1"  v-bind:style="{display:display_information_header[0],width:width_max_content[0]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[0]}">{{ title_information_header[0] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_2"  v-bind:style="{display:display_information_header[1],width:width_max_content[1]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[1]}">{{ title_information_header[1] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_3"  v-bind:style="{display:display_information_header[2],width:width_max_content[2]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[2]}">{{ title_information_header[2] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_4"  v-bind:style="{display:display_information_header[3],width:width_max_content[3]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[3]}">{{ title_information_header[3] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_5"  v-bind:style="{display:display_information_header[4],width:width_max_content[4]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[4]}">{{ title_information_header[4] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_6"  v-bind:style="{display:display_information_header[5],width:width_max_content[5]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[5]}">{{ title_information_header[5] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_7"  v-bind:style="{display:display_information_header[6],width:width_max_content[6]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[6]}">{{ title_information_header[6] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_8"  v-bind:style="{display:display_information_header[7],width:width_max_content[7]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[7]}">{{ title_information_header[7] }}</h1>
+        </div> -->
+        <!-- 検索部分で設定した変数を定義する -->
+        <div class="packet_operator_information_header_time">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[0] }">{{ information_header_time_title }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_time_data[0] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_time_data[1] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_time_data[2] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_time_data[3] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_time_data[4] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_time_data[5] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_time_data[6] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_time_data[7] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_time_data[8] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_time_data[9] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_time_data[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_time_data[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_time_data[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_time_data[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_time_data[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_time_data[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_time_data[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_time_data[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_time_data[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_time_data[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_time_data[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_time_data[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_time_data[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_time_data[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_time_data[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_time_data[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_time_data[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_time_data[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_time_data[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_time_data[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_1"  v-bind:style="{display:display_information_header[0],width:width_max_content[0]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[0]}">{{ title_information_header[0] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_1[0] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_1[1] }}</h1> 
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_1[2] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_1[3] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_1[4] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_1[5] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_1[6] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_1[7] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_1[8] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_1[9] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_1[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_1[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_1[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_1[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_1[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_1[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_1[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_1[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_1[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_1[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_1[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_1[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_1[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_1[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_1[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_1[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_1[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_1[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_1[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_1[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_2"  v-bind:style="{display:display_information_header[1],width:width_max_content[1]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[1]}">{{ title_information_header[1] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_2[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_2[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_2[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_2[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_2[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_2[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_2[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_2[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_2[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_2[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_2[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_2[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_2[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_2[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_2[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_2[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_2[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_2[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_2[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_2[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_2[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_2[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_2[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_2[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_2[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_2[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_2[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_2[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_2[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_2[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_3"  v-bind:style="{display:display_information_header[2],width:width_max_content[2]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[2]}">{{ title_information_header[2] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_3[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_3[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_3[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_3[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_3[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_3[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_3[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_3[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_3[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_3[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_3[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_3[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_3[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_3[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_3[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_3[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_3[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_3[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_3[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_3[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_3[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_3[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_3[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_3[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_3[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_3[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_3[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_3[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_3[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_3[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_4"  v-bind:style="{display:display_information_header[3],width:width_max_content[3]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[3]}">{{ title_information_header[3] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_4[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_4[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_4[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_4[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_4[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_4[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_4[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_4[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_4[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_4[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_4[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_4[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_4[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_4[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_4[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_4[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_4[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_4[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_4[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_4[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_4[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_4[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_4[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_4[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_4[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_4[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_4[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_4[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_4[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_4[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_5"  v-bind:style="{display:display_information_header[4],width:width_max_content[4]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[4]}">{{ title_information_header[4] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_5[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_5[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_5[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_5[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_5[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_5[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_5[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_5[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_5[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_5[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_5[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_5[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_5[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_5[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_5[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_5[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_5[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_5[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_5[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_5[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_5[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_5[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_5[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_5[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_5[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_5[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_5[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_5[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_5[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_5[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_6"  v-bind:style="{display:display_information_header[5],width:width_max_content[5]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[5]}">{{ title_information_header[5] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_6[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_6[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_6[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_6[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_6[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_6[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_6[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_6[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_6[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_6[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_6[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_6[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_6[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_6[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_6[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_6[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_6[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_6[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_6[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_6[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_6[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_6[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_6[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_6[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_6[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_6[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_6[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_6[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_6[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_6[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_7"  v-bind:style="{display:display_information_header[6],width:width_max_content[6]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[6]}">{{ title_information_header[6] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_7[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_7[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_7[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_7[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_7[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_7[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_7[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_7[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_7[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_7[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_7[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_7[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_7[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_7[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_7[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_7[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_7[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_7[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_7[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_7[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_7[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_7[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_7[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_7[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_7[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_7[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_7[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_7[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_7[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_7[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_8"  v-bind:style="{display:display_information_header[7],width:width_max_content[7]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[7]}">{{ title_information_header[7] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_8[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_8[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_8[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_8[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_8[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_8[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_8[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_8[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_8[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_8[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_8[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_8[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_8[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_8[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_8[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_8[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_8[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_8[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_8[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_8[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_8[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_8[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_8[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_8[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_8[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_8[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_8[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_8[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_8[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_8[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_9"  v-bind:style="{display:display_information_header[8],width:width_max_content[8]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[8]}">{{ title_information_header[8] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_9[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_9[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_9[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_9[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_9[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_9[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_9[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_9[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_9[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_9[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_9[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_9[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_9[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_9[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_9[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_9[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_9[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_9[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_9[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_9[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_9[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_9[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_9[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_9[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_9[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_9[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_9[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_9[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_9[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_9[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_10"  v-bind:style="{display:display_information_header[9],width:width_max_content[9]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[9]}">{{ title_information_header[9] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_10[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_10[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_10[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_10[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_10[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_10[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_10[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_10[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_10[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_10[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_10[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_10[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_10[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_10[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_10[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_10[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_10[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_10[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_10[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_10[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_10[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_10[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_10[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_10[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_10[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_10[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_10[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_10[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_10[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_10[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_11"  v-bind:style="{display:display_information_header[10],width:width_max_content[10]}">
+          <h1 class="information_frame" v-bind:style="{display:display_information_header[10]}">{{ title_information_header[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[0] ">{{ packet_data_11[0]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[1] ">{{ packet_data_11[1]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[2] ">{{ packet_data_11[2]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[3] ">{{ packet_data_11[3]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[4] ">{{ packet_data_11[4]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[5] ">{{ packet_data_11[5]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[6] ">{{ packet_data_11[6]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[7] ">{{ packet_data_11[7]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[8] ">{{ packet_data_11[8]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[9] ">{{ packet_data_11[9]  }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[10]">{{ packet_data_11[10] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[11]">{{ packet_data_11[11] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[12]">{{ packet_data_11[12] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[13]">{{ packet_data_11[13] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[14]">{{ packet_data_11[14] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[15]">{{ packet_data_11[15] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[16]">{{ packet_data_11[16] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[17]">{{ packet_data_11[17] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[18]">{{ packet_data_11[18] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[19]">{{ packet_data_11[19] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[20]">{{ packet_data_11[20] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[21]">{{ packet_data_11[21] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[22]">{{ packet_data_11[22] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[23]">{{ packet_data_11[23] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[24]">{{ packet_data_11[24] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[25]">{{ packet_data_11[25] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[26]">{{ packet_data_11[26] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[27]">{{ packet_data_11[27] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[28]">{{ packet_data_11[28] }}</h1>
+          <h1 class="information_frame" v-bind:class="display_information[29]">{{ packet_data_11[29] }}</h1>
+        </div>
+        <div class="packet_operator_information_header_12"  v-bind:style="{display:display_information_header[11],width:width_max_content[11]}">
+        </div>
+      </div>
+    </div>
+
+    <!-- パケットページ遷移 -->
+    <div class="packet_operator_transition_booton">
+      <botton class="arrow_left_botton"  v-on:click="packet_operator_transition(-5)">&lt;</botton>
+      <botton class="arrow_font_botton"  v-bind:class="transition_botton_class[0]"  v-on:click="packet_operator_information_change(transition_botton[0],0,0)">{{ transition_botton[0] }} </botton>
+      <botton class="arrow_font_botton"  v-bind:class="transition_botton_class[1]"  v-on:click="packet_operator_information_change(transition_botton[1],1,0)">{{ transition_botton[1] }} </botton>
+      <botton class="arrow_font_botton"  v-bind:class="transition_botton_class[2]"  v-on:click="packet_operator_information_change(transition_botton[2],2,0)">{{ transition_botton[2] }} </botton>
+      <botton class="arrow_font_botton"  v-bind:class="transition_botton_class[3]"  v-on:click="packet_operator_information_change(transition_botton[3],3,0)">{{ transition_botton[3] }} </botton>
+      <botton class="arrow_font_botton"  v-bind:class="transition_botton_class[4]"  v-on:click="packet_operator_information_change(transition_botton[4],4,0)">{{ transition_botton[4] }} </botton>
+      <botton class="arrow_font_botton" >{{ "..." }} </botton>
+      <botton class="arrow_font_botton"  v-bind:class="transition_botton_class_max_number[0]"  v-on:click="packet_operator_information_change(transition_botton_max_number[0].toString(),5,2)">{{ transition_botton_max_number[0] }} </botton>
+      <botton class="arrow_right_botton" v-on:click="packet_operator_transition(5)">></botton>
+    </div>
+
+    <!-- 開始ボタン ストップボタン -->
+    <div class="packet_operator_start_end_button">
+      <botton name="startend" id="start_Botton" class="botton_image_startend botton_image_start" v-bind:class="startend_botton_class[0]" v-on:click="packet_operator_start_botton();">{{ startend_botton_value[0] }} </botton>
+      <botton name="startend" id="end_Botton"   class="botton_image_startend botton_image_end "  v-bind:class="startend_botton_class[1]" v-on:click="packet_operator_end_botton();">{{ startend_botton_value[1] }} </botton>
+    </div>
+  </div>
+</template>
+
+<!-- SCRIPT-->
+<script lang="ts">
+import { Options, Vue }  from "vue-class-component";
+import config            from "../assets/config.json";
+import data_config       from "../assets/data_config.json";
+//import packet            from "/home/csemi/src/log/packet_operator.json";
+// ★柏木変更
+import packet            from "../assets/packet_operator.json";
+
+@Options({
+  props: {
+    title: String
+  }
+})
+
+// 画面表示の変数やリアルタイムでの変更等の関数宣言用
+export default class packet_operator extends Vue {
+
+  //#region 画面表示用変数(HTMLで指定した変数だけを記載すること)
+  public text_area_data              : string[] = [];                                    // text入力用
+  title!                             : string
+  cumulative_total_msg               : string   = cumulative_total_msg                   // "累計件数 : "の文字表示
+  information_header_time_title      : string   = information_header_time_title          // "日時" の文字表示
+  search_botton_msg                  : string   = search_botton_msg                      // "検索開始"の文字表示
+  reset_botton_msg                   : string   = reset_botton_msg                       // "リセット" の文字表示
+  transition_botton_max_number       : number[] = transition_botton_max_number;          // 最大ページ遷移数の値保時
+  transition_botton_class_max_number : string[] = transition_botton_class_max_number;    // 最大ページ遷移数の値保時のクラス名
+  search_title                       : string[] = search_title;                          // 表示する検索タイトルの名称
+  display_information_header         : string[] = display_information_header;            // ディスプレイ表示用のデータ格納(初期は非表示で表示(display:block)を格納していく)
+  title_information_header           : string[] = title_information_header;              // パケット情報ヘッダーに表示するタイトルの名称
+  display_information                : string[] = display_information;                   // 表示非表示用の変数
+  width_max_content                  : string[] = width_max_content;                     // データ部の長さ調整用
+  packet_time_data                   : string[] = packet_time_data;                      // 日時表示用
+  transition_botton_class            : string[] = transition_botton_class;               // ページ遷移用のクラス
+  startend_botton_class              : string[] = startend_botton_class;                 // ページ遷移用のクラス
+  startend_botton_value              : string[] = [start_botton_msg,pause_botton_msg];   // ページ遷移用のクラス
+  transition_botton                  : string[] = ["1","2","3","4","5"];                           // ページ遷移用
+  packet_data_1                      : string[] = packet_data_1;                         // パケット情報表示用
+  packet_data_2                      : string[] = packet_data_2;                         // パケット情報表示用
+  packet_data_3                      : string[] = packet_data_3;                         // パケット情報表示用
+  packet_data_4                      : string[] = packet_data_4;                         // パケット情報表示用
+  packet_data_5                      : string[] = packet_data_5;                         // パケット情報表示用
+  packet_data_6                      : string[] = packet_data_6;                         // パケット情報表示用
+  packet_data_7                      : string[] = packet_data_7;                         // パケット情報表示用
+  packet_data_8                      : string[] = packet_data_8;                         // パケット情報表示用
+  packet_data_9                      : string[] = packet_data_9;                         // パケット情報表示用
+  packet_data_10                     : string[] = packet_data_10;                        // パケット情報表示用
+  packet_data_11                     : string[] = packet_data_11;                        // パケット情報表示用
+  //#endregion 
+
+  //#region 現在時刻表示と画面更新関係のメソッド記載
+  private date: Date = new Date();
+  private onClick_nowTime() {
+    this.date = new Date();
+  }
+  get nowTime() {
+    // 現在時刻
+    setInterval(this.onClick_nowTime,1000);
+    // パケット情報
+    this.packet_operator_information();
+    //this.cumulative_total;
+    return changeDateFormat(this.date);
+  }
+  //#endregion
+
+  // get selectedItem(){
+  //   return {
+  //     selectItems: [
+  //       { id:1, label: "テキスト1"},
+  //       { id:2, label: "テキスト2"},
+  //       { id:3, label: "テキスト3"},
+  //     ],
+  //     selectedItem: 2
+  //   };  
+  // }
+
+  //#region 累計件数表示
+  get cumulative_total() {
+    return packet.length;
+  }
+  //#endregion
+  
+  //#region パケット情報表示
+  public packet_operator_information() {
+    // 画面表示項目の配列作成
+    display_disable_check();
+    // パケット情報の表示
+    packet_operator_get_information(information_flag);
+  }
+  public packet_operator_information_change(data_value:string,color_chenge_flag:number,botton_flag:number) {
+    if(data_value != ""){
+      packet_operator_get_information(parseInt(data_value));
+      set_transition_botton_class(parseInt(data_value),color_chenge_flag,botton_flag);
+    }
+  }
+  //#endregion
+
+  //#region 検索開始 リセットボタン処理
+  public packet_operator_search_start_botton(){
+    let value_check = 0;
+    let checks_str = ""
+
+    // カラー選択チェック
+    let color_checks = document.querySelectorAll<HTMLInputElement>('input[name="colors"]');
+    
+    for ( let i = 0; i < color_checks.length; i++) {
+        if ( color_checks[i].checked === true ) {
+            checks_str += color_checks[i].value + ",";
+        }
+        else{
+            this.text_area_data[9] = "";
+        }
+    }
+    // 末尾のカンマ削除
+    checks_str = return_slice(checks_str)
+
+    // カラーが選択されていた場合はtext_area_data[9]にチェックされた値を代入
+    if(checks_str){
+      this.text_area_data[9] = checks_str
+      // 入力値判定用
+      value_check = 1;
+    }
+
+    // 入力項目がない場合、検索を開始しない
+    for(let i = 0; i<this.text_area_data.length;i++){
+      if(this.text_area_data[i] !== undefined && this.text_area_data[i] != "")
+      value_check++;
+    }
+    if(value_check != 0){
+      // 画面表示項目の配列作成
+      packet_search(this.text_area_data);
+    }
+    else{
+      return_alert_message(alert_message_search_none);
+    }
+  }
+  public packet_operator_search_end_botton(){
+    // 全パケット情報を表示するためにフラグを変更
+    packet_data_flag = 0;
+    return_alert_message(alert_message_reset);
+  }
+  //#endregion
+
+  //#region スタートストップボタン
+  public packet_operator_start_botton() {
+  
+  // 色の変更
+  if(this.startend_botton_value[0] == start_botton_msg){
+    this.startend_botton_value[0] = crops_botton_msg;
+    this.startend_botton_value[1] = stop_botton_msg;
+    this.startend_botton_class[0] = startend_color_green;
+    this.startend_botton_class[1] = startend_color_white;
+  }
+  else{
+    this.startend_botton_value[0] = start_botton_msg;
+    this.startend_botton_value[1] = pause_botton_msg;
+    this.startend_botton_class[0] = startend_color_white;
+    this.startend_botton_class[1] = startend_color_red;
+  }
+  //return changeDateFormat(new Date);
+}
+
+// ストップボタンが押されたときの関数
+public packet_operator_end_botton() {
+  return changeDateFormat(new Date);
+}
+  //#endregion
+
+  //#region ページ遷移(ボタン押下で起動)
+  public packet_operator_transition(data_value:number) {
+    for(let i=0;i<transition_botton_length;i++){
+      let transition_botton_data = parseInt(this.transition_botton[i]);
+      let transition_botton_next_data = transition_botton_data + data_value;
+      if(transition_botton_next_data > 0){
+        if(transition_botton_next_data <= this.transition_botton_max_number[0]){
+          this.transition_botton[i] = transition_botton_next_data.toString();
+          set_transition_botton_class(transition_botton_next_data,i,1);
+        }
+        else{
+          //this.transition_botton[i] = ;
+        }    
+      }
+    }
+  }
+  //#endregion
+}
+
+//#region デフォルト値の設定
+const search_title                 : string[] = [];                                          // jsonファイルで読みこんだ検索タイトルの名前配列を格納
+const display_information_header   : string[] = [];                                          // ヘッダーの表示非表示を格納
+const title_information_header     : string[] = [];                                          // ヘッダーの表示非表示を格納
+const packet_unixTime_data         : number[] = [];                                          // jsonファイルからunixTimeを格納
+const display_information          : string[] = [];                                          // パケット情報の表示非表示を格納
+const width_max_content            : string[] = [];                                          // データ部の長さを格納
+const cumulative_total_msg                    = "累計件数 : ";                               // 固定文字列(変更予定なし)
+const information_header_time_title           = "日時";                                      // 固定文字列(変更予定なし)
+const information_header_data_title           = "データ部";                                  // 固定文字列(変更予定なし)
+const search_botton_msg                       = "検索開始";                                  // 固定文字列(変更予定なし)
+const reset_botton_msg                        = "リセット";                                  // 固定文字列(変更予定なし)
+const start_botton_msg                        = "START";                                     // 固定文字列(変更予定なし)
+const stop_botton_msg                         = "STOP";                                      // 固定文字列(変更予定なし)
+const crops_botton_msg                        = "稼働中";                                    // 固定文字列(変更予定なし)
+const pause_botton_msg                        = "停止中";                                    // 固定文字列(変更予定なし)
+const display_block                           = "block";                                     // ディスプレイに表示する
+const display_block_class                     = "display_block";                             // ディスプレイに表示する
+const display_none_class                      = "display_none";                              // ディスプレイに非表示する
+const packet_change_backgroundcolor_before    = "packet_change_backgroundcolor_before";      // packet jsonファイルのflagが1の場合に扱うcssクラス名
+const packet_change_backgroundcolor_after     = "packet_change_backgroundcolor_after";       // packet jsonファイルのflagが2の場合に扱うcssクラス名
+const packet_change_backgroundcolor_none      = "packet_change_backgroundcolor_none";        // packet jsonファイルのflagが2の場合に扱うcssクラス名
+const transition_color_select                 = "transition_color_select";                   // 選択されているページの数字の色を変更する場合に扱うcssクラス名
+const transition_color                        = "transition_color";                          // 選択されていないページの数字の色を変更する扱うcssクラス名
+const transition_botton_class                 = [transition_color_select,transition_color,transition_color,transition_color,transition_color];
+const transition_botton_class_max_number      = [transition_color];                          // 最大ページ遷移数の値保時のクラス名
+const startend_color_red                      = "backGroundColor_red";                       // スタートストップのボタン色を変更する場合に扱うcssクラス名
+const startend_color_green                    = "backGroundColor_green";                     // スタートストップのボタン色を変更する場合に扱うcssクラス名
+const startend_color_white                    = "backGroundColor_white";                     // スタートストップのボタン色を変更する場合に扱うcssクラス名
+const startend_botton_class                   = [startend_color_white,startend_color_red];   // スタートストップのボタン色を変更する場合に扱うcssクラス名配列
+const width_content                           = "max-content";                               // データ部の横の長さを調整するために使用
+const alert_message_search_block              = "検索結果を表示します。";                    // メッセージ表示内容
+const alert_message_search_none               = "検索結果がありませんでした。";              // メッセージ表示内容
+const alert_message_reset                     = "リセットしました。";                        // メッセージ表示内容
+const alert_message_search_input_no           = "の入力項目が正しくありません。";            // メッセージ表示内容
+const display_block_flag_1                    = 1;                                           // 表示する用のフラグ  
+const information_count                       = 30;                                          // パケット情報を表示するためのdefault値(画面表示パケット数)
+const transition_botton_length                = 5;                                           // ページ遷移でのデフォルトの値 
+let   packet_time_data             : string[] = [];                                          // パケットの日時を格納  (画面表示用)
+let   packet_data_1                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_2                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_3                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_4                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_5                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_6                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_7                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_8                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_9                : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_10               : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   packet_data_11               : string[] = [];                                          // パケットのデータを格納(画面表示用)
+let   transition_botton_max_number : number[] = [];                                          // 最大ページ遷移数の値
+let   packet_data_search                      = packet;                                      // 検索条件を表示するためのパケットデータオブジェクト
+let   packet_data_search_array_result         = packet;                                      // 検索結果を格納するためのパケットデータオブジェクト
+let   information_flag                        = 1;                                           // ページ遷移時の表示しているページ数データ(表示しているページで可変する)
+let   packet_data_flag                        = 0;                                           // 0:通常パケット 1:検索条件一致パケット
+let   array_count                             = 0;                                           // パケット情報取得時のfor文で使用
+let   set_search_packet_flag                  = 0;                                           // パケット検索機能で使用するパラメータ
+//#endregion
+
+//#region 検索タイトルとパケット情報表示処理
+// jsonファイルを読み込んで検索タイトル欄の表示とパケット情報表示箇所のヘッダーの作成を行う
+function display_disable_check(){
+  let count_title_length = return0_value();
+  for(let i=0;i<config.length;i++){
+    search_title[i] = config[i].title;
+  // jsonのdisplay_flagが1ならばパケット表示ヘッダーの表示を行う
+    if(display_block_flag_1 == config[i].display_flag){
+      display_information_header[count_title_length] = display_block;
+      title_information_header  [count_title_length] = config[i].title;
+      count_title_length++;
+    }
+  }
+  // 最後にデータ部のデータを表示する
+  display_information_header[count_title_length] = display_block;
+  width_max_content[count_title_length]          = width_content;
+  title_information_header  [count_title_length] = information_header_data_title;
+}
+
+// パケット情報取得関数(表示用の配列に格納していく)
+// 引数1:表示するページ数の値(パケット情報の取得箇所が変わる)
+function packet_operator_get_information(page_count:number) {
+
+  let packet_data = packet;
+
+  // packet_data_flagで表示するパケットを変更する
+  if(packet_data_flag == 1){
+    packet_data = packet_data_search;
+  }
+
+  // 
+  transition_botton_max_number[0] = Math.ceil(packet_data.length / information_count);
+
+  // 表示するフラグの変更と色替えと
+  information_flag = page_count;
+  array_count      = return0_value();
+
+  // 画面表示するデータの取得範囲を定義
+  let page_array_count       = information_count * page_count;
+  let page_array_count_start = information_count * (page_count - 1);
+      
+  // パケットを降順に変更(時間)
+  packet_data.sort(function(a,b){return parseInt(b.time) - parseInt(a.time);});
+
+  // 各パケット情報配列に格納
+  for(let i=page_array_count_start;i<page_array_count;i++){
+
+    // データがない場合は処理を以降のデータを非表示にする
+    if(packet_data.length > i ){
+
+      // 日時
+      // パケット情報をカンマ区切りの配列にする
+      // 変数宣言
+      packet_unixTime_data[array_count] = parseInt(packet_data[i].time);
+      let _packet_data                  = packet_chenge_array(packet_data[i].packet);
+      let block_count                   = return0_value();
+      let packet_data_data              = returnNull_value();
+
+      // 表示用の配列にデータを格納していく(データ部のデータ以外)
+      for(let j= 0;j<config.length;j++){
+       if(display_block_flag_1 == config[j].display_flag){
+         let return_value = set_definition(_packet_data,"",config[j].data,config[j].handlimg_flag);
+         set_switch_packet_array_value(block_count,return_value);
+         block_count++;
+        }
+      }
+
+      // データ部のデータをひとまとめにする
+      for(let j=data_config[0].data;j<_packet_data.length;j++){
+       // 10進数から16進数に変更
+       packet_data_data += return_value_16(_packet_data[j]);
+       packet_data_data += "," ;
+      }
+
+      // 画面表示用に格納
+      set_switch_packet_array_value(block_count,return_slice(packet_data_data));
+
+      // データがあるため画面表示(基本的にはdisplayはnoneとなっており、データがある場合にdisplayをblockとする)
+      display_information[array_count] = set_switch_packet_backgroundcolor(packet_data[i].flag,display_information[array_count]);
+    }
+    else{
+      // データがないため非表示
+      display_information[array_count] = display_none_class;
+    }
+    array_count++;
+  }
+
+  // unixTimeを日本時間に変更
+  packet_time_data = changeDateFormatUnixTime(packet_unixTime_data,packet_time_data);
+}
+//#endregion
+
+//#region 画面表示のためにデータを操作しやすい用に変換(unix,パケットを配列に)
+// unixタイム変換
+// 引数1:unixタイム配列
+// 引数2:フォーマット変換配列
+function changeDateFormatUnixTime(unixTime:number[], return_value:string[]) {
+  for(let i= 0;i<unixTime.length;i++){
+    return_value[i] = changeDateFormat(new Date(unixTime[i] * 1000));
+  }
+  return return_value;
+}
+
+// 1パケット情報を配列に変換
+// 引数1:パケット情報
+function packet_chenge_array(packet:string){
+  // "[","]" を削除
+  packet = replace(packet,"[","");
+  packet = replace(packet,"]","");
+  // カンマ区切りで分割
+  return packet.split(",");
+}
+
+// 配列からjson定義のデータを取得し格納
+// 引数1:パケット情報を配列にした値
+// 引数2:画面表示する値
+// 引数3:jsonファイルで定義した値
+// 引数4:jsonファイルで定義した値
+function set_definition(array:string[],value:string,set_data:number[],handlimg_flag:number){
+  for(let i= 0;i<set_data.length;i++){
+    value += array[set_data[i]] + ".";
+  }
+  return set_switch_packet_handlimg(handlimg_flag,return_slice(value));
+}
+
+// jsonファイルより特定の処理を行う
+// 引数1:jsonファイルで定義した値
+// 引数2:画面表示する値
+function set_switch_packet_handlimg(flag:number,value:string){
+  switch(flag){
+    // 特に処理なし(最後の余計な"."を消す)
+    case 0:
+     break;
+    // 10進数を16進数に変換
+    case 100:
+      var array_value = value.split(".");
+      value = returnNull_value();
+      for(let i=0;i<array_value.length;i++){
+        value += return_value_16(array_value[i]) + ".";
+      }
+      value = return_slice(value);
+    break;
+    // 複数バイトで1つの意味合いを持つ場合
+    case 101:
+      array_value = value.split(".");
+      value = returnNull_value();
+      for(let i=0;i<array_value.length;i++){
+        value += return_value_2(array_value[i]);
+      }
+      value = return_value_10(value);
+    break;
+      default:
+      break;
+  }
+  return value;
+}
+//#endregion
+
+//#region 色替え
+// ページ遷移のボタン色替え
+// 引数1:5つ表示されているページ数の値
+// 引数2:色を変更する配列の場所指定
+// 引数3:フラグ
+function set_transition_botton_class(value:number,num:number,flag:number){
+  if(flag != 1){
+    for(let i=0;i<transition_botton_length;i++){
+      transition_botton_class[i] = transition_color;
+    }
+    transition_botton_class_max_number[0] = transition_color;
+  }
+  if(flag == 2){
+    transition_botton_class_max_number[0] = transition_color_select;
+  }
+  
+  if(value == information_flag){
+      transition_botton_class[num] = transition_color_select;
+  }
+  else{
+    transition_botton_class[num] = transition_color;
+  }
+}
+
+// パケットオペレータで変更した箇所のパケット情報の背景色を変更する
+// 引数1:jsonファイルで定義した値
+// 引数2:画面表示する値
+function set_switch_packet_backgroundcolor(flag:number,value:string){
+  switch(flag){
+    // 表示のみで色の変更を行わない
+    case 0:
+      value = display_block_class
+     break;
+    // 背景色を変更する
+    case 1:
+      value = packet_change_backgroundcolor_before;
+    break;
+    case 2:
+      value = packet_change_backgroundcolor_after;
+    break;
+    case 3:
+      value = packet_change_backgroundcolor_none;
+    break;
+  }
+  return value;
+}
+//#endregion
+
+//#region 検索ボタン押下時の処理
+function packet_search(text_area_data:string[]){
+
+  // 初期化
+  packet_data_search     = [];
+  set_search_packet_flag = return0_value();
+  for(let i=0;i<text_area_data.length;i++){
+
+    // 入力された検索条件が正しいかチェック
+    let search_value_array = set_search_value_check(config[i].search_flag,text_area_data[i],config[i].title);
+
+    if(search_value_array.length != 0){
+      for(let j=0;j<search_value_array.length;j++){
+        // 条件にマッチしたパケットを配列に格納
+        set_search_packet(config[i].search_flag,search_value_array[j])
+      }
+    }
+  }
+  // 該当データがある場合は検索条件で表示を行う
+  if(packet_data_search.length != 0){
+    // 画面に検索条件にマッチした情報を表示するためにフラグを変更する
+    packet_data_flag = 1;
+    return_alert_message(alert_message_search_block);
+  }
+  else{
+    return_alert_message(alert_message_search_none);
+  }
+}
+
+// 検索開始処理(入力文字判定)
+function set_search_value_check(flag:number,value:string,message_title:string){
+  // 変数定義
+  let return_array_value :string[] = [];
+  let return_array_value_default :string[] = [];
+
+  // valueが定義されているかチェック
+  if(value !== undefined && value != ""){
+    // 文字をカンマ区切りで分ける
+    return_array_value = value.split(",");
+
+    for(let i=0;i<return_array_value.length;i++){
+      
+      switch(flag){
+        // 1byte毎にチェックする場合
+        case 1000:
+
+        break;
+        // 複数byteで1データの値をチェックする場合
+        case 1001:
+
+        break;
+        // 時間でチェックする場合
+        case 1002:
+        case 1003:
+          var dateTime = Date.parse(value);
+          return_array_value[i] = dateTime.toString();
+          // 一旦 NaNしかチェックしていないがほかもありそう
+          // とりあえずの処理
+          if(return_array_value[i] == "NaN"){
+            return_alert_message(message_title + alert_message_search_input_no);
+            return return_array_value = [];
+          }
+        break;
+
+        default:
+          return_array_value_default[i] = value;
+          return return_array_value_default;
+      }
+    }
+  }
+  return return_array_value;
+}
+
+// 条件一致パケット検索
+function set_search_packet(flag:number,value:string){
+  // 初期化と変数格納元の変更
+  let data_count                  = return0_value();
+  let packet_data_array           = packet;
+  packet_data_search_array_result = [];
+
+  if(set_search_packet_flag != 0){
+    packet_data_array = packet_data_search;
+  }
+
+  // ローカル変数
+  let config_data:string[] = [];
+
+  // config.jsonから要素配列を取得
+  for(let i = 0;i < config.length ; i++){
+    // 引数のflagと一致するものだけ
+    if ( config[i].search_flag == flag){
+      config_data = config[i].data.toString().split(',');
+      break;
+    }
+  }
+
+  // パケット検索
+  // for(let i=0;i<packet_data_array.length;i++){
+    switch(flag){
+      // 
+      case 1000:
+
+      break;
+      // 
+      case 1001:
+
+      break;
+
+      // 日時(from)
+      case 1002:
+        for(let i=0;i<packet_data_array.length;i++){
+          if(parseInt(packet_data_array[i].time) * 1000 >= parseInt(value)){
+            packet_data_search_array_result[data_count] = packet_data_array[i];
+            data_count++;
+          }
+        }
+        packet_data_search = packet_data_search_array_result;
+      break;
+
+      // 日時(to)
+      case 1003:
+        for(let i=0;i<packet_data_array.length;i++){
+          if(parseInt(packet_data_array[i].time) * 1000 <= parseInt(value)){
+            packet_data_search_array_result[data_count] = packet_data_array[i];
+            data_count++;
+          }
+        }
+        packet_data_search = packet_data_search_array_result;
+      break;
+
+      case 1004:  // 送信元MAC
+      case 1005:  // 送信先MAC
+      {
+        let input_array_value = value.split(",");
+        // OR検索
+        for (let h = 0; h < input_array_value.length; ++h) {
+
+          // 検索対象レコードごと
+          for(let i=0;i<packet_data_array.length;i++){
+
+            // JSONレコード取得
+            let p = packet_chenge_array(packet_data_array[i].packet);
+
+            let search_tgt ="";
+            
+            // JSONの値を組立て
+            for (let j = 0 ; j < config_data.length ; j++){
+                
+                let idx = parseInt(config_data[j]);
+
+                // 16進変換して結合
+                search_tgt = search_tgt + return_value_16(p[idx]);
+
+                // 接続詞の付与
+                if (j < config_data.length -1 ){
+                  search_tgt = search_tgt + '.';
+                }
+            }
+
+            // 検索            
+            if( search_tgt == input_array_value[h]){
+              packet_data_search_array_result[data_count] = packet_data_array[i];
+              // 返却する数を数えている
+              data_count++;
+            }
+          }
+        }
+        packet_data_search = packet_data_search_array_result;
+        break;
+      }
+
+      case 1006:  // 送信元IP
+      case 1007:  // 送信先IP
+      case 1008:  // Protcol
+      {
+        let input_array_value = value.split(",");
+        // OR検索
+        for (let h = 0; h < input_array_value.length; ++h) {
+
+          // 検索対象レコードごと
+          for(let i=0;i<packet_data_array.length;i++){
+
+            // JSONレコード取得
+            let p = packet_chenge_array(packet_data_array[i].packet);
+
+            let search_tgt ="";
+            
+            // JSONの値を組立て
+            for (let j = 0 ; j < config_data.length ; j++){
+                
+                let idx = parseInt(config_data[j]);
+
+                // Int変換で、半角スペースを除外して結合
+                search_tgt = search_tgt + parseInt(p[idx]).toString();
+
+                // 接続詞の付与
+                if (j < config_data.length -1 ){
+                  search_tgt = search_tgt + '.';
+                }
+            }
+
+            // 検索ワードの半角スペースをすべて除外
+            input_array_value[h] = input_array_value[h].replaceAll(/\s+/g , '');
+
+            // 検索
+            if( search_tgt == input_array_value[h]){
+              packet_data_search_array_result[data_count] = packet_data_array[i];
+              // 返却する数を数えている
+              data_count++;
+            }
+          }
+        }
+        packet_data_search = packet_data_search_array_result;
+        break;
+      }
+
+      // Length
+      case 1009:  
+      {
+        let input_array_value = value.split(",");
+        // OR検索
+        for (let h = 0; h < input_array_value.length; ++h) {
+
+          // 検索対象レコードごと
+          for(let i=0;i<packet_data_array.length;i++){
+
+            // JSONレコード取得
+            let p = packet_chenge_array(packet_data_array[i].packet);
+
+            let search_tgt ="";
+
+            // JSONの値を組立て
+            for (let j = 0 ; j < config_data.length ; j++){            
+                
+                let idx = parseInt(config_data[j]);
+            
+                // 2進変換
+                let bin_tgt = return_value_2(parseInt(p[idx]).toString());
+
+                // 2進文字列の結合
+                if(bin_tgt == "0"){
+                  search_tgt = search_tgt + "00000000";
+                }else{
+                  search_tgt = search_tgt + bin_tgt;
+                }
+            }
+
+            // 2進 -> 10進に変換
+            search_tgt = return_value_10(search_tgt) 
+
+            // 検索
+            if( search_tgt == input_array_value[h]){
+              packet_data_search_array_result[data_count] = packet_data_array[i];
+              // 返却する数を数えている
+              data_count++;
+            }
+          }
+        }
+        packet_data_search = packet_data_search_array_result;
+        break;
+      }
+
+
+      // Ethernet
+      /* 
+      case 1010:
+        break;
+      */
+
+      // 開始アドレス
+      /*
+      case 1011:
+        // 詳細がきまってから
+        break;
+      */
+
+      // パターン
+      /*
+      case 1012:
+        // 詳細がきまってから
+      break;
+      */
+
+      // パターン
+      case 1010:
+      {
+        // 検索ワードの半角スペースをすべて除外
+        value = value.replaceAll(/\s+/g , '');
+
+        // オフセット番号を0で初期化
+        let slice_number = 0
+        // 区切り文字(:)の存在をチェック
+        if(value.includes(':')){
+          // 存在する場合だけ任意の値を使用
+          slice_number = parseInt(value.substr(0, value.indexOf(':')));
+          // オフセット番号と区切り文字までを削除
+          value = value.substr(value.indexOf(':') + 1);
+        }
+
+        // 検索対象レコードごと
+        for(let i=0;i<packet_data_array.length;i++){
+
+          // JSONレコード取得
+          let p = packet_chenge_array(packet_data_array[i].packet);
+
+          // パターン検索
+          if(patten_search(slice_number, value, p))
+          {
+            packet_data_search_array_result[data_count] = packet_data_array[i];
+            data_count++;
+          }
+        }
+        packet_data_search = packet_data_search_array_result;
+        break;
+      } 
+
+      // カラー
+      case 1011:
+      {
+        let input_array_value = value.split(",");
+            
+        // OR検索
+        for (let h = 0; h < input_array_value.length; ++h) {
+
+          // 検索対象レコードごと
+          for(let i=0;i<packet_data_array.length;i++){
+
+            // カラーデータ
+            let tgt_color = packet_data_array[i].flag.toString()
+            
+            if( tgt_color == input_array_value[h]){
+              packet_data_search_array_result[data_count] = packet_data_array[i];
+              // 返却する数を数えている
+              data_count++;
+            }
+          }
+        }
+        packet_data_search = packet_data_search_array_result;
+        break;
+      } 
+    }
+  // }
+  // 一回目以降は検索条件に一致したデータで検索を行う
+  set_search_packet_flag = 1;
+}
+//#endregion
+
+//#region 仮実装(関数だけ用意している)
+// switchで格納先を変更する
+// 格納先を2次元配列にしたいが表示でエラーとなるから一旦このやり方
+// ダサいからこのやり方はやりたくない
+// とりあえずの実装
+function set_switch_packet_array_value(block_count:number,return_value:string) {
+  switch(block_count){
+    case 0:
+      packet_data_1[array_count] = return_value;
+    break;
+    case 1:
+      packet_data_2[array_count] = return_value;
+    break;
+    case 2:
+      packet_data_3[array_count] = return_value;
+    break;
+    case 3:
+      packet_data_4[array_count] = return_value;
+    break;
+    case 4:
+      packet_data_5[array_count] = return_value;
+    break;
+    case 5:
+      packet_data_6[array_count] = return_value;
+    break;
+    case 6:
+      packet_data_7[array_count] = return_value;
+    break;
+    case 7:
+      packet_data_8[array_count] = return_value;
+    break;
+    case 8:
+      packet_data_9[array_count] = return_value;
+    break;
+    case 9:
+      packet_data_10[array_count] = return_value;
+    break;
+    case 10:
+      packet_data_11[array_count] = return_value;
+    break;
+    default:
+      break;
+  }
+}
+
+// 開始ボタンが押されたときの関数
+
+//#endregion
+
+//#region  便利関数(基本的に変換した値をreturnで返すだけ)
+// 時間を引数に画面表示するためのフォーマットを作成
+function changeDateFormat(newDate: Date) {
+  return (
+    [
+      newDate.getFullYear(),
+      ConvertTo2Digits(newDate.getMonth() + 1),
+      ConvertTo2Digits(newDate.getDate()),
+    ].join('/') +  ' ' + 
+    [
+      ConvertTo2Digits(newDate.getHours()),
+      ConvertTo2Digits(newDate.getMinutes()),
+      ConvertTo2Digits(newDate.getSeconds()),
+    ].join(':')
+  )
+}
+// 0埋め 例:2023/8/22 → 2023/08/22
+function ConvertTo2Digits(newNum: number) {
+  return newNum.toString().padStart(2, "0");
+}
+
+function return_slice(value:string){
+  return value.slice(0, -1);
+}
+
+// 10進数 → 2進数に変換
+function return_value_2(value:string){
+  return parseInt(value).toString(2).padStart(8,"0");
+}
+
+// 2進数 → 10進数に変換
+function return_value_10(value:string){
+  return parseInt(value,2).toString();
+}
+
+// 10進数 → 16進数に変換
+function return_value_16(value:string){
+  return parseInt(value).toString(16).padStart(2,"0");
+}
+
+// replace関数(指定文字列の変換)
+function replace(data:string,replace_font:string,replace_chenge_font:string){
+  return data.replace(replace_font,replace_chenge_font);
+}
+
+// alert関数
+function return_alert_message(message:string){
+  alert(message);
+}
+
+// 変数の初期化用
+function returnNull_value(){
+  return "";
+}
+
+// 変数の初期化用
+function return0_value(){
+  return 0;
+}
+//#endregion
+
+// パターン前方一致検索の関数
+function patten_search(offset:number, search_val:string, src_data:string[]){
+  
+  let search_tgt ="";
+  
+  // Jsonのデータ部を16進数に変換
+  for(let j=offset;j<src_data.length;j++){
+    // 10進数から16進数に変更
+    search_tgt += return_value_16(src_data[j]);
+    search_tgt += "," ;
+  }
+
+  // 末尾のカンマ削除
+  search_tgt = return_slice(search_tgt)
+
+  if(search_tgt.startsWith(search_val)){
+    return true
+  }else{
+    return false
+  }
+}
+</script>
+
+<!-- CSS -->
+<style scoped>
+/* タイトル */
+  .packet_operator_title {
+    position: absolute;
+    color: white;
+    height: 10%;
+    width: 25%;
+    top: 0%;
+    left: 40%;
+    font-size: 2vh;
+  }
+
+  /* 現在時刻 */
+  .packet_operator_time {
+    position: absolute;
+    height: 1%;
+    width: 21%;
+    left: 78%;
+    color: white;
+    font-size: 1.9vh;
+  }
+
+  /* 検索入力欄 */
+  .packet_operator_search_input{
+    position: absolute;
+    background-color:rgb(32, 29, 29);
+    color:white;
+    height: 24%;
+    width: 80%;
+    top: 9%;
+    left: 2%;
+    border: 3px solid gray;
+  }
+  .packet_operator_search_input_row_2{
+    position:relative;
+    top:16.4%;
+  }
+  .packet_operator_search_input_row_3{
+    position:relative;
+    top:33%;
+  }
+  .packet_operator_search_input_row_4{
+    position:relative;
+    top:49.5%;
+  }
+  .packet_operator_search_input_row_5{
+    position:relative;
+    top:66%;
+  }
+  .packet_operator_search_input_row_6{
+    position:relative;
+    top:82.5%;
+  }
+  .input_title_left{
+    position:absolute;
+    left:0%;
+    width: 15%;
+    height: 16%;
+    text-align: center;
+    font-size: 3vh;
+    margin:0%;
+    border-top: solid 1px gray;
+  }
+  .input_text_left{
+    position:absolute;
+    left:15%;
+    width: 34.4%;
+    height: 3.2vh;
+  }
+  .input_select_left{
+    position:absolute;
+    left:15%;
+    width: 35%;
+    height: 4vh;
+  } 
+  .input_title_right{
+    position:absolute;
+    left:50%;
+    width: 15%;
+    height: 16%;
+    text-align: center;
+    font-size: 3vh;
+    margin:0%;
+    border-top: solid 1px gray;
+  }
+  .input_text_right{
+    position:absolute;
+    left:65%;
+    width: 34.4%;
+    height: 3.2vh;
+  }
+  .input_selectbox_right{
+    position:absolute;
+    left:65%;
+    width: 34.4%;
+    height: 3.2vh;
+  }
+
+  /* 検索 リセットボタン */
+  .packet_operator_search_botton {
+    position: absolute;
+    height: 10%;
+    width: 15%;
+    top: 12%;
+    left: 83.1%;
+  }
+  .botton_image_search{
+    height: 60%;
+    width: 45%;
+    font-size: 3vh;
+    text-align: center;
+    background-color: whitesmoke;
+    margin: 0%;
+  }
+  .botton_image_search {
+    position: absolute;
+  }
+  .botton_image_reset{
+    position: absolute;
+    left: 50%;
+  }
+
+  /* 累計件数 */
+  .packet_operator_cumulative_total {
+    position: absolute;
+    background-color:rgb(32, 29, 29);
+    color:white;
+    height: 10%;
+    width: 15%;
+    top: 21%;
+    left: 83%;
+    font-size: 3vh;
+  }
+  .cumulative_total {
+    position: absolute;
+    left:60%;
+    top:25%;
+  }
+  .cumulative_total_msg {
+    position: absolute;
+    left:5%;
+    top:25%;
+  }
+
+  /* パケット情報表示 */
+  .packet_operator_information {
+    position: absolute;
+    background-color:rgb(32, 29, 29);
+    color:white;
+    height: 53%;
+    width: 96%;
+    top: 42%;
+    left: 2%;
+    overflow: scroll;
+  }
+ .packet_operator_information_header_time {
+    position: absolute;
+    top: 0%;
+    left:0%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+ }
+ .packet_operator_information_header_1 {
+    position:absolute;
+    top: 0%;
+    left:15%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+ .packet_operator_information_header_2 {
+    position:absolute;
+    top: 0%;
+    left:30%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_3 {
+    position:absolute;
+    top: 0%;
+    left:45%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_4 {
+    position:absolute;
+    top: 0%;
+    left:60%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_5 {
+    position:absolute;
+    top: 0%;
+    left:75%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_6 {
+    position:absolute;
+    top: 0%;
+    left:90%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_7 {
+    position:absolute;
+    top: 0%;
+    left:105%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_8 {
+    position:absolute;
+    top: 0%;
+    left:120%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_9 {
+    position:absolute;
+    top: 0%;
+    left:135%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_10 {
+    position:absolute;
+    top: 0%;
+    left:150%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_11 {
+    position:absolute;
+    top: 0%;
+    left:165%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .packet_operator_information_header_12 {
+    position:absolute;
+    top: 0%;
+    left:180%;
+    width: 15%;
+    text-align: center;
+    font-size: 1vh;
+    margin:0%;
+    border: solid 1px gray;
+    display:none;
+ }
+
+ .information_frame{
+    border: solid 1px gray;
+    margin:0%;
+    display: none;
+ }
+
+ .information_header_fixed{
+    position: fixed;
+ }
+
+  /* ページ遷移ボタン */
+ .packet_operator_transition_booton {
+    position: absolute;
+    height: 8%;
+    width: 40%;
+    top: 38%;
+    left: 83%;
+ }
+
+ .arrow_right_botton{
+    margin: 1%;
+    width: 2%;
+    background-color: black;
+    border: black;
+    color: white;
+    text-align: center;
+ }
+ .arrow_left_botton{
+    margin: 1%;
+    width: 2%;
+    background-color: black;
+    border: black;
+    color: white;
+    text-align: center;
+ }
+ .arrow_font_botton{
+    margin: 1%;
+    width: 2%;
+    background-color: black;
+    border: black;
+    color: white;  
+    text-align: center;
+ }
+ .arrow_right_botton:hover{
+    background-color: rgb(66, 65, 65);
+    border: rgb(66, 65, 65);
+ }
+ .arrow_left_botton:hover{
+    background-color: rgb(66, 65, 65);
+    border: rgb(66, 65, 65);
+ }
+ .arrow_font_botton:hover{
+    background-color: rgb(66, 65, 65);
+    border: rgb(66, 65, 65);
+ }
+ /* スタート ストップボタン */
+  .packet_operator_start_end_button {
+    position: absolute;
+    height: 8%;
+    width: 20%;
+    top: 35%;
+    left: 60%;
+  }
+  .botton_image_startend{
+    height: 60%;
+    width: 40%;
+    font-size: 3vh;
+    text-align: center;
+    background-color: white;
+  }
+  .botton_image_start{
+    position: absolute;
+  }
+
+  .botton_image_end{
+    position: absolute;
+    left: 50%;
+  }
+
+  .backGroundColor_red{
+    background-color: red;
+  }
+  .backGroundColor_green{
+    background-color: greenyellow;
+  }
+  .backGroundColor_white{
+    background-color: white;
+  }
+  
+  input[type="button"] {
+    border:1px;
+    border-radius: 0.5vh;
+  }
+  .packet_change_backgroundcolor_before {
+    background-color:orange;
+    display:block;
+  }
+  .packet_change_backgroundcolor_after {
+    background-color:chartreuse;
+    display:block;
+  }
+
+  .packet_change_backgroundcolor_none {
+    background-color:rgb(114, 107, 107);
+    display:block;
+  }
+  .display_block {
+    display:block;
+  }
+  .display_none {
+    display:none;
+  }
+  .transition_color{
+    color: white;
+  }
+  .transition_color_select{
+    color:aqua;
+  }
+
+</style>
